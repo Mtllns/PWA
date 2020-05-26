@@ -43,12 +43,16 @@ self.addEventListener('activate', event => {
     
     const respuesta = caches.keys().then( keys => {
 
-        // static-v1
-        if ( key !== STATIC_CACHE && key.includes('static')) {
-            return caches.delete(key);         
-        }
+        keys.forEach( key => {
+            
+            // static-v1
+            if ( key !== STATIC_CACHE && key.includes('static')) {
+                return caches.delete(key);         
+            }
+        });
+
 
     });
     
-    event.waitUntil(  );
+    event.waitUntil( respuesta );
 });
