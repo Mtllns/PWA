@@ -1,6 +1,8 @@
 
+// imports
+importScripts('js/sw-utils.js');
 
-const STATIC_CACHE    = 'static-v1';
+const STATIC_CACHE    = 'static-v2';
 const DYNAMIC_CACHE   = 'dynamic-v1';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
@@ -15,7 +17,8 @@ const APP_SHELL = [
     'img/avatars/spiderman.jpg',
     'img/avatars/thor.jpg',
     'img/avatars/wolverine.jpg',
-    'js/app.js'
+    'js/app.js',
+    'js/sw-utils.js'
 ];
 
 const APP_SHELL_INMUTABLE = [
@@ -55,4 +58,31 @@ self.addEventListener('activate', event => {
     });
     
     event.waitUntil( respuesta );
+});
+
+// Estrategia de Cache
+// Cache Only
+
+// Escuchamos el evendo fetch y recibimos el evento del fetch
+self.addEventListener('fetch', e => {
+    
+    // verificar en el cache si existe la "request"
+   const respuesta = caches.match( e.request ).then( res => {
+
+        if ( res ) { // Si existe la respuesta, regresa la misma
+            return res;
+        } else { // Si no existe la respuesta
+            
+           return fetch( e.request ).then( newRes => {
+
+                return actualizaCacheDinamico( DYNAMIC_CACHE, e.request, newRes );
+
+           }); 
+            
+        }
+
+
+    });
+    
+    e.respondWith( respuesta ); // En caso de que esto no se cumpla, se dispara un error undefine
 });
