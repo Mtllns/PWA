@@ -2,8 +2,8 @@
 // imports
 importScripts('js/sw-utils.js');
 
-const STATIC_CACHE    = 'static-v3';
-const DYNAMIC_CACHE   = 'dynamic-v1';
+const STATIC_CACHE    = 'static-v4';
+const DYNAMIC_CACHE   = 'dynamic-v2';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 // El corazón de la app (se debe cargar de manera intantane o lo más rápido posible)
@@ -50,6 +50,11 @@ self.addEventListener('activate', event => {
             
             // static-v1
             if ( key !== STATIC_CACHE && key.includes('static')) {
+                return caches.delete(key);         
+            }
+
+            // dynamic-v2
+            if ( key !== DYNAMIC_CACHE && key.includes('dynamic')) {
                 return caches.delete(key);         
             }
         });
