@@ -2,9 +2,9 @@
 // imports
 importScripts('js/sw-utils.js');
 
-const STATIC_CACHE    = 'static-v4';
-const DYNAMIC_CACHE   = 'dynamic-v2';
-const INMUTABLE_CACHE = 'inmutable-v1';
+const STATIC_CACHE    = 'static-v5';
+const DYNAMIC_CACHE   = 'dynamic-v3';
+const INMUTABLE_CACHE = 'inmutable-v2';
 
 // El corazón de la app (se debe cargar de manera intantane o lo más rápido posible)
 const APP_SHELL = [
