@@ -481,7 +481,27 @@ function mostrarMapaModal(lat, lng) {
 // Obtener la geolocalización
 btnLocation.on('click', () => {
 
-    console.log('Botón geolocalización');
+    // console.log('Botón geolocalización');
+    // check for Geolocation support
+    if (navigator.geolocation) {
+      console.log('Geolocation is supported!');
+    }
+    else {
+      console.log('Geolocation is not supported for this Browser/OS.');
+    }
+
+    $.mdtoast('Cargando mapa...', {
+        interaction: true,
+        interactionTimeout: 2000,
+        actionText: 'Ok!'
+    });
+
+    navigator.geolocation.getCurrentPosition( pos => {
+        console.log( pos );
+        mostrarMapaModal( pos.coords.latitude, pos.coords.longitude );
+
+
+    });
     
 
 });
