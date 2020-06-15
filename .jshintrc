@@ -69,6 +69,7 @@
     "wsh"           : false,
     "yui"           : false,
     "globals"       : {
+        "importScripts": true,
         "self"     : true,
         "__dirname": true,
         "caches"   : true,
