@@ -90,6 +90,8 @@ function crearMensajeHTML(mensaje, personaje, lat, lng, foto) {
 
     var content =`
     <li class="animated fadeIn fast"
+        data-user="${ personaje }"
+        data-mensaje="${ mensaje }"
         data-tipo="mensaje">
 
 
@@ -542,5 +544,41 @@ btnTomarFoto.on('click', () => {
 
 // Share API
 
+// if ( navigator.share ) {
+//     console.log('Navegador lo soporta');
+// } else {
+//     console.log('Navegador NO lo soporta');
+// }
 
+// Funcion jquery para saber en que elemento se ha hecho clic
+timeline.on('click', 'li', function() {
+
+    // console.log( $(this) );
+
+    let tipo    = $(this).data('tipo');
+    let lat     = $(this).data('lat');
+    let lng     = $(this).data('lng'); 
+    let mensaje = $(this).data('mensaje'); 
+    let user    = $(this).data('user');
+
+
+    console.log({ tipo, lat, lng, mensaje, user });
+
+
+    const shareOpts = {
+        title: user,
+        text: mensaje
+    };
+
+    if (tipo === 'mapa') {
+        shareOpts.text = 'Mapa';
+        shareOpts.url = `https://wwww.google.com/maps/@${ lat },${ lng },15z`;
+    }
+
+    navigator.share(shareOpts)
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+
+
+});
 
